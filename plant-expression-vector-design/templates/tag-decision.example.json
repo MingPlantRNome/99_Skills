@@ -1,0 +1,15 @@
+{
+  "target_feature_id": "replace_with_target_cds_id",
+  "design_context": "new_design",
+  "choice": "pending",
+  "decision_source": "not_asked",
+  "user_response": null,
+  "purpose": null,
+  "selected_tag": null,
+  "fusion_site": "pending",
+  "literature_evidence_ids": [],
+  "sequence_source": null,
+  "tag_feature_ids": [],
+  "plan_confirmed": false,
+  "fusion_plan": null
+}

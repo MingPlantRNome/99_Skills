@@ -1,0 +1,2 @@
+# Optional PNG export; also needs a system Cairo library and CJK fonts.
+cairosvg>=2.7,<3

@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "construct_id": "replace_with_project_construct_id",
+  "topology": "circular",
+  "replication_class": "literature_reconstruction",
+  "replication_reference_source_id": null,
+  "sources": [],
+  "assembly": [],
+  "features": [],
+  "new_expression_target_ids": [],
+  "tag_decisions": [],
+  "protected_regions": [],
+  "restriction_sites": [],
+  "required_feature_ids": [],
+  "unresolved_issues": ["Populate from real evidence and sequence files; this template is not a design."]
+}

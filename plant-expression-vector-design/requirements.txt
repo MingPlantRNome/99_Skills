@@ -1,0 +1,2 @@
+biopython>=1.85,<2
+jsonschema>=4.23,<5

@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "construct_id", "topology", "replication_class", "sources", "assembly", "features", "unresolved_issues"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "construct_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,63}$"},
+    "topology": {"enum": ["circular", "linear"]},
+    "replication_class": {"enum": ["exact_plasmid", "cassette_replica", "literature_reconstruction", "partial_redesign", "de_novo"]},
+    "replication_reference_source_id": {"type": ["string", "null"]},
+    "sources": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "file", "format", "evidence"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "file": {"type": "string", "minLength": 1},
+          "format": {"enum": ["fasta", "genbank"]},
+          "record_id": {"type": ["string", "null"]},
+          "sequence_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+          "evidence": {
+            "type": "object", "additionalProperties": false,
+            "required": ["source_url", "accession_version", "boundary_basis", "evidence_class", "reviewed"],
+            "properties": {
+              "source_url": {"type": ["string", "null"]},
+              "accession_version": {"type": ["string", "null"]},
+              "boundary_basis": {"type": "string", "minLength": 1},
+              "evidence_class": {"enum": ["source_record", "user_provided", "literature_reconstruction", "proposed_design", "test_fixture"]},
+              "reviewed": {"type": "boolean"},
+              "notes": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+    "assembly": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["source_id", "start", "end", "strand"],
+        "properties": {
+          "source_id": {"type": "string"},
+          "start": {"type": "integer", "minimum": 1},
+          "end": {"type": "integer", "minimum": 1},
+          "strand": {"enum": [1, -1]},
+          "inherit_features": {"type": "boolean"}
+        }
+      }
+    },
+    "features": {"type": "array", "items": {"$ref": "#/$defs/feature"}},
+    "new_expression_target_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "tag_decisions": {"type": "array", "items": {"$ref": "#/$defs/tagDecision"}},
+    "protected_regions": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "segments", "strand"],
+        "properties": {
+          "id": {"type": "string"},
+          "segments": {"$ref": "#/$defs/segments"},
+          "strand": {"enum": [1, -1]},
+          "sequence": {"type": "string", "pattern": "^[ACGT]+$"}
+        }
+      }
+    },
+    "restriction_sites": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["name", "sequence", "must_be_absent"],
+        "properties": {
+          "name": {"type": "string"},
+          "sequence": {"type": "string", "pattern": "^[ACGT]+$"},
+          "must_be_absent": {"type": "boolean"}
+        }
+      }
+    },
+    "required_feature_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "unresolved_issues": {"type": "array", "items": {"type": "string"}}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"replication_class": {"const": "de_novo"}}},
+      "then": {
+        "required": ["new_expression_target_ids", "tag_decisions"],
+        "properties": {"new_expression_target_ids": {"minItems": 1}, "tag_decisions": {"minItems": 1}}
+      }
+    }
+  ],
+  "$defs": {
+    "tagDecision": {
+      "type": "object", "additionalProperties": false,
+      "required": ["target_feature_id", "design_context", "choice", "decision_source", "user_response", "purpose", "selected_tag", "fusion_site", "literature_evidence_ids", "sequence_source", "tag_feature_ids", "plan_confirmed"],
+      "properties": {
+        "target_feature_id": {"type": "string", "minLength": 1},
+        "design_context": {"enum": ["new_design", "replicated_original"]},
+        "choice": {"enum": ["pending", "no_tag", "add_tag"]},
+        "decision_source": {"enum": ["not_asked", "user_explicit", "reported_design"]},
+        "user_response": {"type": ["string", "null"]},
+        "purpose": {"type": ["string", "null"]},
+        "selected_tag": {"type": ["string", "null"]},
+        "fusion_site": {"enum": ["pending", "none", "N_terminal", "C_terminal", "internal"]},
+        "literature_evidence_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "sequence_source": {"type": ["string", "null"]},
+        "tag_feature_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "plan_confirmed": {"type": "boolean"},
+        "fusion_plan": {"anyOf": [{"type": "null"}, {"$ref": "#/$defs/fusionPlan"}]}
+      }
+    },
+    "fusionPlan": {
+      "type": "object", "additionalProperties": false,
+      "required": ["assembly_mode", "components", "linker_flexibility_basis", "linker_evidence_ids", "final_stop"],
+      "properties": {
+        "assembly_mode": {"const": "continuous_orf"},
+        "components": {"type": "array", "minItems": 3, "items": {"$ref": "#/$defs/fusionComponent"}},
+        "linker_flexibility_basis": {"type": "string", "minLength": 1},
+        "linker_evidence_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "final_stop": {
+          "type": "object", "additionalProperties": false,
+          "required": ["codon", "provider", "source_id", "source_segments", "source_strand"],
+          "properties": {
+            "codon": {"type": "string", "pattern": "^[ACGT]{3}$"},
+            "provider": {"enum": ["last_component", "vector", "designed"]},
+            "source_id": {"type": "string", "minLength": 1},
+            "source_segments": {"$ref": "#/$defs/segments"},
+            "source_strand": {"enum": [1, -1]}
+          }
+        }
+      }
+    },
+    "fusionComponent": {
+      "type": "object", "additionalProperties": false,
+      "required": ["feature_id", "role", "source_id", "source_segments", "source_strand", "stop_action", "expected_peptide"],
+      "properties": {
+        "feature_id": {"type": "string", "minLength": 1},
+        "role": {"enum": ["target", "tag", "flexible_linker", "signal", "other"]},
+        "source_id": {"type": "string", "minLength": 1},
+        "source_segments": {"$ref": "#/$defs/segments"},
+        "source_strand": {"enum": [1, -1]},
+        "stop_action": {"enum": ["remove_for_fusion", "none_present", "retained_as_final"]},
+        "expected_peptide": {"type": "string", "pattern": "^[ACDEFGHIKLMNPQRSTVWY]+$"}
+      }
+    },
+    "segments": {"type": "array", "minItems": 1, "items": {"type": "array", "prefixItems": [{"type": "integer", "minimum": 1}, {"type": "integer", "minimum": 1}], "items": false, "minItems": 2, "maxItems": 2}},
+    "feature": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "type", "segments", "strand"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "type": {"type": "string", "minLength": 1},
+        "segments": {"$ref": "#/$defs/segments"},
+        "strand": {"enum": [1, -1]},
+        "qualifiers": {"type": "object", "additionalProperties": {"oneOf": [{"type": "string"}, {"type": "array", "items": {"type": "string"}}]}},
+        "expected_protein": {"type": "string", "pattern": "^[ACDEFGHIKLMNPQRSTVWY]+\\*?$"},
+        "complete_cds": {"type": "boolean"},
+        "translation_table": {"type": "integer", "minimum": 1}
+      },
+      "allOf": [{"if": {"properties": {"type": {"const": "CDS"}}}, "then": {"required": ["expected_protein", "complete_cds"]}}]
+    }
+  }
+}

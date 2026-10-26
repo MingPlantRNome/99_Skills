@@ -1,0 +1,7 @@
+{
+  "variable_name": "LAB_VECTOR_DIR",
+  "default_path": "/Users/myang/ZSPACE/sata12-13225852405/400_Lab_Management@zspace/403_Plasmid/Maps",
+  "expected_platform": "darwin",
+  "read_only": true,
+  "check_every_invocation": true
+}

@@ -1,0 +1,13 @@
+{
+  "assembly_mode": "continuous_orf",
+  "components": [],
+  "linker_flexibility_basis": null,
+  "linker_evidence_ids": [],
+  "final_stop": {
+    "codon": null,
+    "provider": null,
+    "source_id": null,
+    "source_segments": [],
+    "source_strand": 1
+  }
+}

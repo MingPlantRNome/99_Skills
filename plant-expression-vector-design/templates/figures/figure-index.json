@@ -1,0 +1,252 @@
+{
+  "purpose": "template",
+  "figures": [
+    {
+      "id": "01-system",
+      "title": "总体系统示意图",
+      "layout": "flow",
+      "nodes": [
+        {
+          "label": "输入 / 启动事件",
+          "role": "input"
+        },
+        {
+          "label": "调控 / 核心执行",
+          "role": "core"
+        },
+        {
+          "label": "输出 / 检测读数",
+          "role": "output"
+        }
+      ],
+      "links": [
+        {
+          "status": "hypothesis",
+          "basis": "格式示例，无项目证据"
+        },
+        {
+          "status": "hypothesis",
+          "basis": "格式示例，无项目证据"
+        }
+      ],
+      "files": [
+        "01-system.svg",
+        "01-system.png"
+      ]
+    },
+    {
+      "id": "02-module",
+      "title": "模块表达框：非比例、坐标未定",
+      "layout": "flow",
+      "nodes": [
+        {
+          "label": "启动子 / 调控区",
+          "role": "input"
+        },
+        {
+          "label": "CDS / 标签 / 定位",
+          "role": "core"
+        },
+        {
+          "label": "终止区域",
+          "role": "output"
+        }
+      ],
+      "links": [
+        {
+          "status": "concept",
+          "basis": "概念顺序，不表示真实序列"
+        },
+        {
+          "status": "concept",
+          "basis": "概念顺序，不表示真实序列"
+        }
+      ],
+      "files": [
+        "02-module.svg",
+        "02-module.png"
+      ]
+    },
+    {
+      "id": "03-working-mode",
+      "title": "机制与时空工作模式",
+      "layout": "flow",
+      "nodes": [
+        {
+          "label": "发生位置 / 时期",
+          "role": "input"
+        },
+        {
+          "label": "候选过程 / 中继",
+          "role": "core"
+        },
+        {
+          "label": "读数位置 / 终点",
+          "role": "output"
+        }
+      ],
+      "links": [
+        {
+          "status": "hypothesis",
+          "basis": "格式示例；跨组织过程需独立证据"
+        },
+        {
+          "status": "missing",
+          "basis": "格式示例，尚无项目资料"
+        }
+      ],
+      "files": [
+        "03-working-mode.svg",
+        "03-working-mode.png"
+      ]
+    },
+    {
+      "id": "04-build",
+      "title": "构建与整合路线",
+      "layout": "flow",
+      "nodes": [
+        {
+          "label": "来源片段 / 骨架",
+          "role": "input"
+        },
+        {
+          "label": "组装 / 中间体",
+          "role": "core"
+        },
+        {
+          "label": "结构检查 / 整合",
+          "role": "output"
+        }
+      ],
+      "links": [
+        {
+          "status": "workflow",
+          "basis": "建议工作顺序，不代表已完成"
+        },
+        {
+          "status": "workflow",
+          "basis": "建议工作顺序，不代表已完成"
+        }
+      ],
+      "files": [
+        "04-build.svg",
+        "04-build.png"
+      ]
+    },
+    {
+      "id": "05-validation",
+      "title": "分阶段最小验证",
+      "layout": "flow",
+      "nodes": [
+        {
+          "label": "模块功能验证",
+          "role": "input"
+        },
+        {
+          "label": "接口 / 关键假设",
+          "role": "core"
+        },
+        {
+          "label": "整合功能 / 对照",
+          "role": "output"
+        }
+      ],
+      "links": [
+        {
+          "status": "workflow",
+          "basis": "验证计划；非实验结果"
+        },
+        {
+          "status": "workflow",
+          "basis": "验证计划；非实验结果"
+        }
+      ],
+      "files": [
+        "05-validation.svg",
+        "05-validation.png"
+      ]
+    },
+    {
+      "id": "06-interpretation",
+      "title": "结果判读：观察不等于机制成立",
+      "layout": "decision",
+      "nodes": [
+        {
+          "label": "观察 / 实测结果",
+          "role": "input"
+        },
+        {
+          "label": "候选解释",
+          "role": "core"
+        },
+        {
+          "label": "替代解释",
+          "role": "control"
+        },
+        {
+          "label": "区分性验证",
+          "role": "output"
+        }
+      ],
+      "links": [
+        {
+          "status": "hypothesis",
+          "basis": "格式示例；不据表型宣称机制已证实"
+        },
+        {
+          "status": "hypothesis",
+          "basis": "格式示例；列出其他解释"
+        },
+        {
+          "status": "workflow",
+          "basis": "下一步检验；非验证成功"
+        }
+      ],
+      "files": [
+        "06-interpretation.svg",
+        "06-interpretation.png"
+      ]
+    },
+    {
+      "id": "07-boundary",
+      "title": "设计边界与交付影响",
+      "layout": "decision",
+      "nodes": [
+        {
+          "label": "本次证据 / QC",
+          "role": "input"
+        },
+        {
+          "label": "当前可支持",
+          "role": "output"
+        },
+        {
+          "label": "未回答 / 待验证",
+          "role": "core"
+        },
+        {
+          "label": "阻断项 / 范围",
+          "role": "risk"
+        }
+      ],
+      "links": [
+        {
+          "status": "workflow",
+          "basis": "证据审查流程，不预设已有结论"
+        },
+        {
+          "status": "workflow",
+          "basis": "证据审查流程，不预设已有结论"
+        },
+        {
+          "status": "workflow",
+          "basis": "证据审查流程，不预设已有结论"
+        }
+      ],
+      "files": [
+        "07-boundary.svg",
+        "07-boundary.png"
+      ]
+    }
+  ]
+}

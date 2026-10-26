@@ -1,0 +1,18 @@
+{
+  "profile_id": "user-easyevo2",
+  "verified": false,
+  "model_type": "evo2_7b",
+  "model_revision": null,
+  "code_revision": null,
+  "weights_path": null,
+  "argv_template": null,
+  "env_template": {},
+  "device": "cuda:0",
+  "score_type": null,
+  "score_tolerance": 0.00001,
+  "score_columns": {"id": "sequence_name", "value": "probability"},
+  "output_delimiter": ",",
+  "context_limit_nt": null,
+  "limits": {"max_items": 64, "max_item_nt": 4096, "timeout_seconds": 3600},
+  "simulation": false
+}
